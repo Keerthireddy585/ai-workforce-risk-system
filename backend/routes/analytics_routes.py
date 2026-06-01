@@ -4,6 +4,9 @@ from analytics.productivity_analytics import calculate_productivity
 from core.auth import verify_token, require_role
 from fastapi import Header
 
+from database import SessionLocal
+from models.employee import Employee
+
 router = APIRouter()
 @router.get("/productivity-score")
 def productivity():
@@ -11,10 +14,33 @@ def productivity():
     return{"productivity_score": score}
     return {"message": "analytics working"}
 
-#  burnout risk api
+#  burnout risk api (this is hardcoded)
+# @router.get("/burnout-risk")
+# def burnout_risk():
+#     return { "burnout_risk": "High"}
 @router.get("/burnout-risk")
 def burnout_risk():
-    return { "burnout_risk": "High"}
+
+    db = SessionLocal()
+
+    employees = db.query(Employee).all()
+
+    high_count = 0
+
+    for emp in employees:
+        if emp.burnout_risk == "High":
+            high_count += 1
+
+    db.close()
+
+    if high_count > 0:
+        return {
+            "burnout_risk": "High"
+        }
+
+    return {
+        "burnout_risk": "Low"
+    }
 
 #  project risk api
 @router.get("/project-risk")
