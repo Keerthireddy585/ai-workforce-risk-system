@@ -42,10 +42,41 @@ def burnout_risk():
         "burnout_risk": "Low"
     }
 
-#  project risk api
+#  project risk api (hardcoded)
+# @router.get("/project-risk")
+# def project_risk():
+#     return {"project_risk": "Medium"}
 @router.get("/project-risk")
 def project_risk():
-    return {"project_risk": "Medium"}
+
+    db = SessionLocal()
+
+    employees = db.query(Employee).all()
+
+    db.close()
+
+    if len(employees) == 0:
+        return {
+            "project_risk": "No Data"
+        }
+
+    total_delay = 0
+
+    for emp in employees:
+        total_delay += emp.delay_days or 0
+
+    average_delay = total_delay / len(employees)
+
+    if average_delay > 5:
+        risk = "High"
+    elif average_delay > 2:
+        risk = "Medium"
+    else:
+        risk = "Low"
+
+    return {
+        "project_risk": risk
+    }
 
 # anomaly alerts api
 @router.get("/anomaly-alert")
