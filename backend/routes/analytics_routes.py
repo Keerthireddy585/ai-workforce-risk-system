@@ -52,10 +52,41 @@ def project_risk():
 def anomaly_alert():
     return{"anomaly_alert": "Suspicious Activity Detected"}
 
-# workload analytics api
+# workload analytics api (hardcoded)
+# @router.get("/workload-status")
+# def workload_status():
+#     return {"workload_status": "Overloaded"}
 @router.get("/workload-status")
 def workload_status():
-    return {"workload_status": "Overloaded"}
+
+    db = SessionLocal()
+
+    employees = db.query(Employee).all()
+
+    db.close()
+
+    if len(employees) == 0:
+        return {
+            "workload_status": "No Data"
+        }
+
+    total_hours = 0
+
+    for emp in employees:
+        total_hours += emp.hours_worked or 0
+
+    average_hours = total_hours / len(employees)
+
+    if average_hours > 45:
+        status = "Overloaded"
+    elif average_hours > 35:
+        status = "Balanced"
+    else:
+        status = "Underloaded"
+
+    return {
+        "workload_status": status
+    }
 
 # create manager-only API
 @router.get("/manager-dashboard")
