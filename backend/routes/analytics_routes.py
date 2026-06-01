@@ -8,11 +8,43 @@ from database import SessionLocal
 from models.employee import Employee
 
 router = APIRouter()
+
+# hardcoded
+# @router.get("/productivity-score")
+# def productivity():
+#     score = calculate_productivity(8,2)
+#     return{"productivity_score": score}
+#     return {"message": "analytics working"}
 @router.get("/productivity-score")
 def productivity():
-    score = calculate_productivity(8,2)
-    return{"productivity_score": score}
-    return {"message": "analytics working"}
+
+    db = SessionLocal()
+
+    employees = db.query(Employee).all()
+
+    db.close()
+
+    if len(employees) == 0:
+        return {
+            "productivity_score": 0
+        }
+
+    total_score = 0
+
+    for emp in employees:
+
+        score = calculate_productivity(
+            emp.tasks_completed or 0,
+            emp.delay_days or 0
+        )
+
+        total_score += score
+
+    average_score = round(total_score / len(employees))
+
+    return {
+        "productivity_score": average_score
+    }
 
 #  burnout risk api (this is hardcoded)
 # @router.get("/burnout-risk")
