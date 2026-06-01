@@ -14,7 +14,7 @@
 #     return {"message": "Employee Created"}
 
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
 from database import SessionLocal
 from models.employee import Employee
 
@@ -43,14 +43,21 @@ def get_employees():
 
 
 @router.post("/employees")
-def create_employee():
+def create_employee(employee_data: dict = Body(...)):
 
     db = SessionLocal()
 
     employee = Employee(
-        name="Keerthi",
-        department="IT",
-        risk_score=80
+        name=employee_data["name"],
+        department=employee_data["department"],
+        risk_score=employee_data["risk_score"],
+        hours_worked=employee_data["hours_worked"],
+        tasks_completed=employee_data["tasks_completed"],
+        delay_days=employee_data["delay_days"],
+        burnout_risk=employee_data["burnout_risk"]
+        # name="Keerthi",
+        # department="IT",
+        # risk_score=80
     )
 
     db.add(employee)
