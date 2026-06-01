@@ -110,10 +110,33 @@ def project_risk():
         "project_risk": risk
     }
 
-# anomaly alerts api
+# anomaly alerts api (hardcoded)
+# @router.get("/anomaly-alert")
+# def anomaly_alert():
+#     return{"anomaly_alert": "Suspicious Activity Detected"}
 @router.get("/anomaly-alert")
 def anomaly_alert():
-    return{"anomaly_alert": "Suspicious Activity Detected"}
+
+    db = SessionLocal()
+
+    employees = db.query(Employee).all()
+
+    db.close()
+
+    for emp in employees:
+
+        if (
+            (emp.hours_worked or 0) > 60
+            or (emp.risk_score or 0) > 90
+            or (emp.delay_days or 0) > 7
+        ):
+            return {
+                "anomaly_alert": "Suspicious Activity Detected"
+            }
+
+    return {
+        "anomaly_alert": "No Anomalies Detected"
+    }
 
 # workload analytics api (hardcoded)
 # @router.get("/workload-status")
