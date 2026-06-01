@@ -34,7 +34,11 @@ def get_employees():
             "id": emp.id,
             "name": emp.name,
             "department": emp.department,
-            "risk_score": emp.risk_score
+            "risk_score": emp.risk_score,
+            "hours_worked": emp.hours_worked,
+            "tasks_completed": emp.tasks_completed,
+            "delay_days": emp.delay_days,
+            "burnout_risk": emp.burnout_risk
         })
 
     db.close()
