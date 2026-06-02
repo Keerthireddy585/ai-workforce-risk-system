@@ -74,3 +74,33 @@ def create_employee(employee_data: dict = Body(...)):
         "message": "Employee Created",
         "employee_id": employee.id
     }
+
+# creating backend delete api
+@router.delete("/employees/{employee_id}")
+def delete_employee(employee_id: int):
+
+    db = SessionLocal()
+
+    employee = (
+        db.query(Employee)
+        .filter(Employee.id == employee_id)
+        .first()
+    )
+
+    if employee is None:
+
+        db.close()
+
+        return {
+            "message": "Employee not found"
+        }
+
+    db.delete(employee)
+
+    db.commit()
+
+    db.close()
+
+    return {
+        "message": "Employee deleted"
+    }
