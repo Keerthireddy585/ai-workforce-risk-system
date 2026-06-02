@@ -1,4 +1,6 @@
 "use client"
+import axios from "axios"
+import {useEffect, useState} from "react"
 
 import {
   LineChart,
@@ -9,21 +11,48 @@ import {
   Tooltip
 } from "recharts"
 
-const data = [
+// const data = [
 
-  { month: "Jan", productivity: 80 },
+//   { month: "Jan", productivity: 80 },
 
-  { month: "Feb", productivity: 75 },
+//   { month: "Feb", productivity: 75 },
 
-  { month: "Mar", productivity: 85 },
+//   { month: "Mar", productivity: 85 },
 
-  { month: "Apr", productivity: 70 },
+//   { month: "Apr", productivity: 70 },
 
-  { month: "May", productivity: 90 }
+//   { month: "May", productivity: 90 }
 
-]
+// ]
 
 export default function ProductivityChart() {
+
+  const [data, setData] = useState([
+    {
+      month: "Current",
+      productivity: 0
+    }
+  ])
+
+  useEffect(() => {
+
+    axios
+      .get(
+        "https://ai-workforce-risk-system.onrender.com/productivity-score"
+      )
+      .then((response) => {
+
+        setData([
+          {
+            month: "Current",
+            productivity:
+              response.data.productivity_score
+          }
+        ])
+
+      })
+
+  }, [])
 
   return (
 
