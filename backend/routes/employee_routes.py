@@ -104,3 +104,41 @@ def delete_employee(employee_id: int):
     return {
         "message": "Employee deleted"
     }
+
+
+@router.put("/employees/{employee_id}")
+def update_employee(employee_id: int, employee_data: dict):
+
+    db = SessionLocal()
+
+    employee = (
+        db.query(Employee)
+        .filter(Employee.id == employee_id)
+        .first()
+    )
+
+    if employee is None:
+
+        db.close()
+
+        return {
+            "message": "Employee not found"
+        }
+
+    employee.name = employee_data.get("name")
+    employee.department = employee_data.get("department")
+    employee.risk_score = employee_data.get("risk_score")
+    employee.hours_worked = employee_data.get("hours_worked")
+    employee.tasks_completed = employee_data.get("tasks_completed")
+    employee.delay_days = employee_data.get("delay_days")
+    employee.burnout_risk = employee_data.get("burnout_risk")
+
+    db.commit()
+
+    db.refresh(employee)
+
+    db.close()
+
+    return {
+        "message": "Employee updated"
+    }
