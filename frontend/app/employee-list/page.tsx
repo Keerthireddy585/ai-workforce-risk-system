@@ -85,6 +85,37 @@ export default function EmployeeListPage() {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       
+      <div className="flex gap-4 mb-4">
+
+        <select
+          className="border p-2"
+          value={departmentFilter}
+          onChange={(e) =>
+            setDepartmentFilter(e.target.value)
+          }
+        >
+          <option value="">All Departments</option>
+          <option value="IT">IT</option>
+          <option value="HR">HR</option>
+          <option value="Finance">Finance</option>
+        </select>
+
+        <select
+          className="border p-2"
+          value={burnoutFilter}
+          onChange={(e) =>
+            setBurnoutFilter(e.target.value)
+          }
+        >
+          <option value="">All Burnout Levels</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+
+      </div>
+
+
       {
   editingEmployee && (
 
