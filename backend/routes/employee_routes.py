@@ -17,6 +17,7 @@
 from fastapi import APIRouter, Body
 from database import SessionLocal
 from models.employee import Employee
+from analytics.risk_scoring import calculate_risk_score
 
 router = APIRouter()
 
@@ -50,15 +51,40 @@ def get_employees():
 def create_employee(employee_data: dict = Body(...)):
 
     db = SessionLocal()
+    
+    productivity_score = (
+        employee_data["tasks_completed"] * 10
+    ) - (
+        employee_data["delay_days"] * 5
+    )
+
+    overtime_hours = max(
+    0,
+    employee_data["hours_worked"] - 40
+    )
+
+    risk_score = calculate_risk_score(
+        productivity_score,
+        overtime_hours,
+        employee_data["delay_days"]
+    )
+
+    if risk_score >= 80:
+        burnout_risk = "High"
+    elif risk_score >= 50:
+        burnout_risk = "Medium"
+    else:
+        burnout_risk = "Low"
+
 
     employee = Employee(
         name=employee_data["name"],
         department=employee_data["department"],
-        risk_score=employee_data["risk_score"],
+        risk_score=risk_score,
         hours_worked=employee_data["hours_worked"],
         tasks_completed=employee_data["tasks_completed"],
         delay_days=employee_data["delay_days"],
-        burnout_risk=employee_data["burnout_risk"]
+        burnout_risk=burnout_risk
         # name="Keerthi",
         # department="IT",
         # risk_score=80
