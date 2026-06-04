@@ -39,13 +39,14 @@ export default function EmployeeListPage() {
   await axios.put(
 
     `https://ai-workforce-risk-system.onrender.com/employees/${editingEmployee.id}`,
-
+   
     editingEmployee
 
   )
 
   const response = await axios.get(
-    "https://ai-workforce-risk-system.onrender.com/employees"
+    // "https://ai-workforce-risk-system.onrender.com/employees"
+    "http://127.0.0.1:8000/employees"
   )
 
   setEmployees(response.data)
@@ -59,7 +60,8 @@ export default function EmployeeListPage() {
 
     axios
       .get(
-        "https://ai-workforce-risk-system.onrender.com/employees"
+        // "https://ai-workforce-risk-system.onrender.com/employees"
+        "http://127.0.0.1:8000/employees"
       )
       .then((response) => {
 

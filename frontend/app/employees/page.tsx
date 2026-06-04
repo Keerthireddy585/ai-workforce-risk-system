@@ -6,11 +6,9 @@ export default function EmployeesPage() {
   const [employee, setEmployee] = useState({
     name: "",
     department: "",
-    risk_score: 0,
     hours_worked: 0,
     tasks_completed: 0,
     delay_days: 0,
-    burnout_risk: "",
   });
 
   const handleSubmit = async () => {
@@ -61,17 +59,7 @@ export default function EmployeesPage() {
           }
         />
 
-        <input
-          placeholder="Risk Score"
-          type="number"
-          className="border p-2"
-          onChange={(e) =>
-            setEmployee({
-              ...employee,
-              risk_score: Number(e.target.value),
-            })
-          }
-        />
+       
 
         <input
           placeholder="Hours Worked"
@@ -109,16 +97,7 @@ export default function EmployeesPage() {
           }
         />
 
-        <input
-          placeholder="Burnout Risk"
-          className="border p-2"
-          onChange={(e) =>
-            setEmployee({
-              ...employee,
-              burnout_risk: e.target.value,
-            })
-          }
-        />
+       
 
         <button
           onClick={handleSubmit}
