@@ -150,14 +150,56 @@ def update_employee(employee_id: int, employee_data: dict):
         return {
             "message": "Employee not found"
         }
+    
+    productivity_score = (
+        employee_data.get("tasks_completed") * 10
+    ) - (
+        employee_data.get("delay_days") * 5
+    )
+
+    overtime_hours = max(
+        0,
+        employee_data.get("hours_worked") - 40
+    )
+    
+    print("UPDATE DATA:", employee_data)
+
+    print("hours_worked:", employee_data.get("hours_worked"))
+    print("tasks_completed:", employee_data.get("tasks_completed"))
+    print("delay_days:", employee_data.get("delay_days"))
+
+    risk_score = calculate_risk_score(
+        productivity_score,
+        overtime_hours,
+        employee_data.get("delay_days")
+    )
+    
+    print("Calculated Risk Score:", risk_score)
+
+    if risk_score >= 80:
+        burnout_risk = "High"
+    elif risk_score >= 50:
+        burnout_risk = "Medium"
+    else:
+        burnout_risk = "Low"
+
+    print("Calculated Burnout Risk:", burnout_risk)
 
     employee.name = employee_data.get("name")
     employee.department = employee_data.get("department")
-    employee.risk_score = employee_data.get("risk_score")
+    employee.risk_score = risk_score
     employee.hours_worked = employee_data.get("hours_worked")
     employee.tasks_completed = employee_data.get("tasks_completed")
     employee.delay_days = employee_data.get("delay_days")
-    employee.burnout_risk = employee_data.get("burnout_risk")
+    employee.burnout_risk = burnout_risk
+
+    print("Assigned Risk Score:", employee.risk_score)
+    print("Assigned Burnout Risk:", employee.burnout_risk)
+    
+    print("FINAL risk_score:", risk_score)
+    print("FINAL burnout_risk:", burnout_risk)
+    print("EMPLOYEE risk_score:", employee.risk_score)
+    print("EMPLOYEE burnout_risk:", employee.burnout_risk)
 
     db.commit()
 
