@@ -4,6 +4,10 @@ from analytics.productivity_analytics import calculate_productivity
 from core.auth import verify_token, require_role
 from fastapi import Header
 
+from analytics.workload_analytics import analyze_workload
+from analytics.bottleneck_detection import detect_bottleneck
+from analytics.trend_analysis import analyze_trend
+
 from database import SessionLocal
 from models.employee import Employee
 
@@ -137,6 +141,65 @@ def anomaly_alert():
     return {
         "anomaly_alert": "No Anomalies Detected"
     }
+
+@router.get("/bottleneck-detection")
+def bottleneck_detection():
+
+    db = SessionLocal()
+
+    employees = db.query(Employee).all()
+
+    db.close()
+
+    bottlenecks = []
+
+    for emp in employees:
+
+        result = detect_bottleneck(
+            emp.delay_days or 0
+        )
+
+        if result == "Workflow Bottleneck Detected":
+
+            bottlenecks.append({
+                "employee_id": emp.id,
+                "employee_name": emp.name,
+                "delay_days": emp.delay_days
+            })
+
+    return {
+        "bottlenecks": bottlenecks
+    }
+
+@router.get("/risk-trend")
+def risk_trend():
+
+    db = SessionLocal()
+
+    employees = db.query(Employee).all()
+
+    db.close()
+
+    if len(employees) < 2:
+        return {
+            "trend": "Not Enough Data"
+        }
+
+    scores = []
+
+    for emp in employees:
+
+        scores.append(
+            emp.risk_score or 0
+        )
+
+    trend = analyze_trend(scores)
+
+    return {
+        "risk_scores": scores,
+        "trend": trend
+    }
+
 
 # workload analytics api (hardcoded)
 # @router.get("/workload-status")
