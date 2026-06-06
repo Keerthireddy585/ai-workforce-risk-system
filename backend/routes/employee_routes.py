@@ -17,6 +17,7 @@
 from fastapi import APIRouter, Body
 from database import SessionLocal
 from models.employee import Employee
+from models.employee_history import EmployeeHistory
 from analytics.risk_scoring import calculate_risk_score
 
 router = APIRouter()
@@ -94,11 +95,31 @@ def create_employee(employee_data: dict = Body(...)):
     db.commit()
     db.refresh(employee)
 
+    employee_id = employee.id
+
+    history = EmployeeHistory(
+
+        employee_id=employee.id,
+
+        risk_score=employee.risk_score,
+
+        productivity_score=
+            employee.tasks_completed * 10
+            - employee.delay_days * 5,
+
+        burnout_risk=employee.burnout_risk
+
+    )
+
+    db.add(history)
+
+    db.commit()
+
     db.close()
 
     return {
         "message": "Employee Created",
-        "employee_id": employee.id
+        "employee_id": employee_id
     }
 
 # creating backend delete api
@@ -204,6 +225,24 @@ def update_employee(employee_id: int, employee_data: dict):
     db.commit()
 
     db.refresh(employee)
+
+    history = EmployeeHistory(
+
+        employee_id=employee.id,
+
+        risk_score=employee.risk_score,
+
+        productivity_score=
+            employee.tasks_completed * 10
+            - employee.delay_days * 5,
+
+        burnout_risk=employee.burnout_risk
+
+    )
+
+    db.add(history)
+
+    db.commit()
 
     db.close()
 

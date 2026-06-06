@@ -11,6 +11,8 @@ from analytics.trend_analysis import analyze_trend
 from database import SessionLocal
 from models.employee import Employee
 
+from models.employee_history import EmployeeHistory
+
 router = APIRouter()
 
 # hardcoded
@@ -277,4 +279,35 @@ def hr_dashboard(token: str):
 
     return {
         "message": "HR Workforce Analytics Access Granted"
+    }
+
+
+@router.get("/employee-history/{employee_id}")
+def employee_history(employee_id: int):
+
+    db = SessionLocal()
+
+    history = (
+        db.query(EmployeeHistory)
+        .filter(
+            EmployeeHistory.employee_id == employee_id
+        )
+        .all()
+    )
+
+    db.close()
+
+    results = []
+
+    for record in history:
+
+        results.append({
+            "risk_score": record.risk_score,
+            "productivity_score": record.productivity_score,
+            "burnout_risk": record.burnout_risk
+        })
+
+    return {
+        "employee_id": employee_id,
+        "history": results
     }

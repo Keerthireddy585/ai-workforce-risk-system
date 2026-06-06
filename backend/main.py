@@ -5,8 +5,13 @@ from routes.analytics_routes import router as analytics_router
 from routes.ai_routes import router as ai_router
 from fastapi.middleware.cors import CORSMiddleware
 from routes.auth_routes import router as auth_router
+from database import Base, engine
+from models.employee import Employee
+from models.employee_history import EmployeeHistory
 
 app = FastAPI()
+
+Base.metadata.create_all(bind=engine)
 
 # app.add_middleware(
 #     CORSMiddleware,

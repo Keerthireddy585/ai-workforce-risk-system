@@ -8,5 +8,9 @@ def calculate_risk_score(productivity_score, overtime_hours, delay_days):
 
     if risk_score > 100:
         risk_score = 100
+
+    if risk_score < 0:
+        risk_score = 0
+
     return risk_score
 
