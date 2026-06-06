@@ -41,7 +41,8 @@ export default function DashboardPage() {
 //     })
      axios
        .get(
-         "http://127.0.0.1:8000/bottleneck-detection"
+        //  "http://127.0.0.1:8000/bottleneck-detection"
+        "https://ai-workforce-risk-system.onrender.com/bottleneck-detection"
        )
        .then((response) => {
 

@@ -23,7 +23,8 @@ export default function EmployeeHistoryChart() {
 
     axios
       .get(
-        "http://127.0.0.1:8000/employee-history/12"
+        // "http://127.0.0.1:8000/employee-history/12"
+        "https://ai-workforce-risk-system.onrender.com/employee-history/13"
       )
       .then((response) => {
 
