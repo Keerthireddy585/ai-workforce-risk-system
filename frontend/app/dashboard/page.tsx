@@ -9,6 +9,7 @@ import {jwtDecode} from "jwt-decode"
 import ProductivityChart from "../../components/ProductivityChart"
 import BurnoutChart from "../../components/BurnoutChart"
 import ProjectDelayChart from "../../components/ProjectDelayChart"
+import EmployeeHistoryChart from "../../components/EmployeeHistoryChart"
 
 export default function DashboardPage() {
 
@@ -151,6 +152,13 @@ export default function DashboardPage() {
         ))}
 
          </div>
+
+
+        <div className="p-6 bg-white rounded-2xl shadow-md">
+
+          <EmployeeHistoryChart />
+
+        </div>
        
 
       {/* HR DASHBOARD */}
