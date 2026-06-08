@@ -19,6 +19,7 @@ from database import SessionLocal
 from models.employee import Employee
 from models.employee_history import EmployeeHistory
 from analytics.risk_scoring import calculate_risk_score
+from ai.burnout_prediction import predict_burnout
 
 router = APIRouter()
 
@@ -70,12 +71,18 @@ def create_employee(employee_data: dict = Body(...)):
         employee_data["delay_days"]
     )
 
-    if risk_score >= 80:
-        burnout_risk = "High"
-    elif risk_score >= 50:
-        burnout_risk = "Medium"
-    else:
-        burnout_risk = "Low"
+    burnout_risk = predict_burnout(
+        employee_data["hours_worked"],
+        employee_data["tasks_completed"],
+        employee_data["delay_days"]
+    )
+
+    # if risk_score >= 80:
+    #     burnout_risk = "High"
+    # elif risk_score >= 50:
+    #     burnout_risk = "Medium"
+    # else:
+    #     burnout_risk = "Low"
 
 
     employee = Employee(
@@ -194,17 +201,25 @@ def update_employee(employee_id: int, employee_data: dict):
         overtime_hours,
         employee_data.get("delay_days")
     )
+
+    burnout_risk = predict_burnout(
+        employee_data.get("hours_worked"),
+        employee_data.get("tasks_completed"),
+        employee_data.get("delay_days")
+    )
     
-    print("Calculated Risk Score:", risk_score)
-
-    if risk_score >= 80:
-        burnout_risk = "High"
-    elif risk_score >= 50:
-        burnout_risk = "Medium"
-    else:
-        burnout_risk = "Low"
-
     print("Calculated Burnout Risk:", burnout_risk)
+
+    # print("Calculated Risk Score:", risk_score)
+
+    # if risk_score >= 80:
+    #     burnout_risk = "High"
+    # elif risk_score >= 50:
+    #     burnout_risk = "Medium"
+    # else:
+    #     burnout_risk = "Low"
+
+    # print("Calculated Burnout Risk:", burnout_risk)
 
     employee.name = employee_data.get("name")
     employee.department = employee_data.get("department")

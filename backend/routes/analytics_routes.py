@@ -13,6 +13,8 @@ from models.employee import Employee
 
 from models.employee_history import EmployeeHistory
 
+from ai.burnout_prediction import predict_burnout
+
 router = APIRouter()
 
 # hardcoded
@@ -299,15 +301,53 @@ def employee_history(employee_id: int):
 
     results = []
 
-    for record in history:
+    # for record in history:
+
+    #     results.append({
+    #         "risk_score": record.risk_score,
+    #         "productivity_score": record.productivity_score,
+    #         "burnout_risk": record.burnout_risk
+
+    for index, record in enumerate(history, start=1):
 
         results.append({
+
+            "record": index,
+
             "risk_score": record.risk_score,
-            "productivity_score": record.productivity_score,
-            "burnout_risk": record.burnout_risk
+
+            "productivity_score":
+                record.productivity_score,
+
+            "burnout_risk":
+                record.burnout_risk
+
         })
+        
 
     return {
         "employee_id": employee_id,
         "history": results
+    }
+
+
+
+@router.post("/predict-burnout")
+
+def burnout_prediction(employee: dict):
+
+    risk = predict_burnout(
+
+        employee["hours_worked"],
+        employee["tasks_completed"],
+        employee["delay_days"]
+
+    )
+
+    return {
+
+        "employee": employee["name"],
+
+        "burnout_risk": risk
+
     }
