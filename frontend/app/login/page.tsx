@@ -6,18 +6,27 @@ import { useState } from "react"
 export default function LoginPage() {
 
   const [token, setToken] = useState("")
+  const [role, setRole] = useState("Manager")
 
 
   const handleLogin = async () => {
 
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/login`
+      `${process.env.NEXT_PUBLIC_API_URL}/login`,
+      {
+        role: role
+      }
     )
 
      localStorage.setItem(
     "token",
     response.data.access_token
   )
+
+  localStorage.setItem(
+  "role",
+  response.data.role
+)
 
   window.location.href = "/dashboard"
   }
@@ -32,7 +41,16 @@ export default function LoginPage() {
         <h1 className="text-3xl font-bold mb-6">
           Workforce Login
         </h1>
-
+        
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          className="border p-2 rounded w-full mb-4"
+        >
+          <option value="Admin">Admin</option>
+          <option value="Manager">Manager</option>
+          <option value="Employee">Employee</option>
+        </select>
 
         <button
           onClick={handleLogin}

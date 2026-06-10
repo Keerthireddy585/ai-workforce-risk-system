@@ -38,7 +38,8 @@ export default function ProductivityChart() {
 
     axios
       .get(
-        "https://ai-workforce-risk-system.onrender.com/productivity-score"
+        // "https://ai-workforce-risk-system.onrender.com/productivity-score"
+        `${process.env.NEXT_PUBLIC_API_URL}/productivity-score`
       )
       .then((response) => {
 

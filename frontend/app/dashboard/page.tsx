@@ -12,7 +12,7 @@ import ProjectDelayChart from "../../components/ProjectDelayChart"
 import EmployeeHistoryChart from "../../components/EmployeeHistoryChart"
 
 export default function DashboardPage() {
-
+  
   const [role, setRole] = useState("")
   const [bottlenecks, setBottlenecks] =
   useState<any[]>([])
@@ -42,7 +42,8 @@ export default function DashboardPage() {
      axios
        .get(
         //  "http://127.0.0.1:8000/bottleneck-detection"
-        "https://ai-workforce-risk-system.onrender.com/bottleneck-detection"
+        // "https://ai-workforce-risk-system.onrender.com/bottleneck-detection"
+        `${process.env.NEXT_PUBLIC_API_URL}/bottleneck-detection`
        )
        .then((response) => {
 

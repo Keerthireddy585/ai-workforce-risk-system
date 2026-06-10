@@ -46,7 +46,8 @@ export default function EmployeeListPage() {
 
   const response = await axios.get(
     // "https://ai-workforce-risk-system.onrender.com/employees"
-    "http://127.0.0.1:8000/employees"
+    `${process.env.NEXT_PUBLIC_API_URL}/employees`
+    // "http://127.0.0.1:8000/employees"
   )
 
   setEmployees(response.data)
@@ -61,7 +62,8 @@ export default function EmployeeListPage() {
     axios
       .get(
         // "https://ai-workforce-risk-system.onrender.com/employees"
-        "http://127.0.0.1:8000/employees"
+        // "http://127.0.0.1:8000/employees"
+        `${process.env.NEXT_PUBLIC_API_URL}/employees`
       )
       .then((response) => {
 
