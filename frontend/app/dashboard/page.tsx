@@ -13,6 +13,13 @@ import EmployeeHistoryChart from "../../components/EmployeeHistoryChart"
 
 export default function DashboardPage() {
   
+  const [employees, setEmployees] = useState<any[]>([])
+
+  const [
+   selectedEmployee,
+   setSelectedEmployee
+  ] = useState(0)
+
   const [role, setRole] = useState("")
   const [bottlenecks, setBottlenecks] =
   useState<any[]>([])
@@ -61,6 +68,15 @@ export default function DashboardPage() {
          console.log(error)
 
        })
+
+       axios
+         .get(`${process.env.NEXT_PUBLIC_API_URL}/employees`)
+         .then((response) => {
+           setEmployees(response.data)
+         })
+         .catch((error) => {
+           console.error(error)
+         })
 
 }, [])
 
@@ -155,10 +171,50 @@ export default function DashboardPage() {
 
          </div>
 
+        <select
+          value={selectedEmployee}
+          onChange={(e)=>
+            setSelectedEmployee(
+              Number(e.target.value)
+            )
+          }
+        >
+
+        {/* <option value={10}>
+        Rahul
+        </option>
+
+        <option value={13}>
+        Anjali
+        </option>
+
+        <option value={17}>
+        John
+        </option>
+
+        </select> */}
+
+        {employees.map((employee: any) => (
+          <option
+            key={employee.id}
+            value={employee.id}
+          >
+            {employee.name}
+          </option>
+        ))}
+        </select>
+
 
         <div className="p-6 bg-white rounded-2xl shadow-md">
 
-          <EmployeeHistoryChart />
+          <EmployeeHistoryChart
+          employeeId={selectedEmployee}
+          employeeName={
+            employees.find(
+              (emp: any) => emp.id === selectedEmployee
+            )?.name || ""
+          }
+          />
 
         </div>
        

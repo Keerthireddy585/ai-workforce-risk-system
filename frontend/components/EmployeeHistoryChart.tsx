@@ -12,7 +12,15 @@ import {
   ResponsiveContainer
 } from "recharts"
 
-export default function EmployeeHistoryChart() {
+export default function EmployeeHistoryChart( 
+  {
+    employeeId,
+    employeeName
+  }: {
+    employeeId:number
+    employeeName:string
+  }
+) {
 
   const [history, setHistory] = useState<any[]>([])
 
@@ -29,14 +37,16 @@ export default function EmployeeHistoryChart() {
     //     )
 
     //   })
-
+    console.log("selected Employee ID:", employeeId)
     axios
       .get(
         // "http://127.0.0.1:8000/employee-history/12"
         // "https://ai-workforce-risk-system.onrender.com/employee-history/13"
-        `${process.env.NEXT_PUBLIC_API_URL}/employee-history/13`
+        `${process.env.NEXT_PUBLIC_API_URL}/employee-history/${employeeId}`
       )
       .then((response) => {
+        
+        console.log("History Response:", response.data)
 
         // console.log("History Response:")
         // console.log(response.data)
@@ -47,7 +57,7 @@ export default function EmployeeHistoryChart() {
           response.data.history.map(
             (item: any, index:number) => ({
                 ...item,
-                record: 'Record ${index + 1}'
+                record: `Record ${index + 1}`
             })
           )
         setHistory(
@@ -62,7 +72,7 @@ export default function EmployeeHistoryChart() {
 
       })
 
-  }, [])
+  }, [employeeId])
 
   console.log("History Data:", history)
 
@@ -74,7 +84,9 @@ export default function EmployeeHistoryChart() {
         Employee Risk History
       </h2>
 
-      
+      <p className="mb-2 text-gray-600">
+        Employee: {employeeName}
+      </p>
 
       <p className="mb-4">
         Records Found: {history.length}
