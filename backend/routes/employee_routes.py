@@ -20,6 +20,7 @@ from models.employee import Employee
 from models.employee_history import EmployeeHistory
 from analytics.risk_scoring import calculate_risk_score
 from ai.burnout_prediction import predict_burnout
+# from ai.recommendations import generate_recommendation
 
 router = APIRouter()
 
@@ -41,7 +42,8 @@ def get_employees():
             "hours_worked": emp.hours_worked,
             "tasks_completed": emp.tasks_completed,
             "delay_days": emp.delay_days,
-            "burnout_risk": emp.burnout_risk
+            "burnout_risk": emp.burnout_risk,
+            # "recommendation": emp.recommendation
         })
 
     db.close()
@@ -77,6 +79,11 @@ def create_employee(employee_data: dict = Body(...)):
         employee_data["delay_days"]
     )
 
+    # recommendation = generate_recommendation(
+    #     burnout_risk,
+    #     risk_score
+    # )
+
     # if risk_score >= 80:
     #     burnout_risk = "High"
     # elif risk_score >= 50:
@@ -92,7 +99,8 @@ def create_employee(employee_data: dict = Body(...)):
         hours_worked=employee_data["hours_worked"],
         tasks_completed=employee_data["tasks_completed"],
         delay_days=employee_data["delay_days"],
-        burnout_risk=burnout_risk
+        burnout_risk=burnout_risk,
+        # recommendation=recommendation
         # name="Keerthi",
         # department="IT",
         # risk_score=80

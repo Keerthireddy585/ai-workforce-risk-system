@@ -20,6 +20,8 @@ class Employee(Base):
 
     burnout_risk = Column(String)
 
+    # recommendation = Column(String)
+
 
 # making it real employee data
 # from sqlalchemy import Column, Integer, String
