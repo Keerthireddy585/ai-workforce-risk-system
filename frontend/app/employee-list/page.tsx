@@ -75,16 +75,21 @@ export default function EmployeeListPage() {
 
   return (
 
-    <div className="p-10">
+    <main className="p-10 bg-gray-100 min-h-screen">
+      <div className="max-w-7xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1 className="text-3xl font-bold mb-2">
         Employee List
       </h1>
 
+      <p className="text-gray-500 mb-8">
+        View, search, and manage workforce records
+      </p>
+    
       <input
         type="text"
         placeholder="Search by name or department"
-        className="border p-2 mb-4 w-full"
+        className="border rounded-lg p-3 mb-6 w-full"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
@@ -92,7 +97,7 @@ export default function EmployeeListPage() {
       <div className="flex gap-4 mb-4">
 
         <select
-          className="border p-2"
+          className="border rounded-lg px-4 py-2 bg-white"
           value={departmentFilter}
           onChange={(e) =>
             setDepartmentFilter(e.target.value)
@@ -105,7 +110,7 @@ export default function EmployeeListPage() {
         </select>
 
         <select
-          className="border p-2"
+          className="border rounded-lg px-4 py-2 bg-white"
           value={burnoutFilter}
           onChange={(e) =>
             setBurnoutFilter(e.target.value)
@@ -164,31 +169,31 @@ export default function EmployeeListPage() {
 }
 
 
-
+    <div className="overflow-x-auto rounded-xl border">
 
       <table className="border border-collapse w-full">
 
-        <thead>
+        <thead className="bg-blue-50">
 
           <tr>
 
-            <th className="border p-2">ID</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">ID</th>
 
-            <th className="border p-2">Name</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Name</th>
 
-            <th className="border p-2">Department</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Department</th>
 
-            <th className="border p-2">Risk Score</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Risk Score</th>
 
-            <th className="border p-2">Hours Worked</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Hours Worked</th>
 
-            <th className="border p-2">Tasks Completed</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Tasks Completed</th>
 
-            <th className="border p-2">Delay Days</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Delay Days</th>
 
-            <th className="border p-2">Burnout Risk</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Burnout Risk</th>
 
-            <th className="border p-2">Actions</th>
+            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Actions</th>
 
           </tr>
 
@@ -230,38 +235,50 @@ export default function EmployeeListPage() {
            })
            .map((employee: any) => (
 
-            <tr key={employee.id}>
+            <tr key={employee.id}
+            className="hover:bg-gray-50 transition"
+            >
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
                 {employee.id}
               </td>
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
                 {employee.name}
               </td>
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
                 {employee.department}
               </td>
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
                 {employee.risk_score}
               </td>
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
                 {employee.hours_worked}
               </td>
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
                 {employee.tasks_completed}
               </td>
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
                 {employee.delay_days}
               </td>
 
-              <td className="border p-2">
+              <td className="border px-4 py-3">
+                <span
+                  className={
+                    employee.burnout_risk === "High"
+                    ? "text-red-600 font-semibold"
+                    : employee.burnout_risk === "Medium"
+                    ? "text-yellow-600 font-semibold"
+                    : "text-green-600 font-semibold"
+                  }
+                >  
                 {employee.burnout_risk}
+                </span>
               </td>
 
               <td className="border p-2">
@@ -270,14 +287,14 @@ export default function EmployeeListPage() {
 
                   <button
                     onClick={() => editEmployee(employee)}
-                    className="bg-blue-500 text-white px-3 py-1 rounded"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition"
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => deleteEmployee(employee.id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded"
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg transition"
                   >
                     Delete
                   </button>
@@ -298,6 +315,8 @@ export default function EmployeeListPage() {
 
     </div>
 
+    </div>
+  </main>
   )
 
 }

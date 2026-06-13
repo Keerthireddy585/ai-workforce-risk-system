@@ -37,6 +37,7 @@ export default function EmployeeHistoryChart(
     //     )
 
     //   })
+    console.log("TEST EMPLOYEE CHART")
     console.log("selected Employee ID:", employeeId)
     axios
       .get(
