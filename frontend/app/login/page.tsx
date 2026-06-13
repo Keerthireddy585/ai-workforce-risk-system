@@ -3,6 +3,7 @@
 import axios from "axios"
 import { useState } from "react"
 import {useRouter} from "next/navigation";
+import { Eye, EyeOff } from "lucide-react"
 
 export default function LoginPage() {
 
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [role, setRole] = useState("Manager")
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -81,21 +83,44 @@ export default function LoginPage() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="border p-2 w-full mb-4"
+            className="border rounded-lg p-3 w-full mb-4"
           />
 
-          <input
+          {/* <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="border p-2 w-full mb-4"
-          />
+          /> */}
+
+          <div className="relative mb-4">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border rounded-lg p-3 pr-12"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600 transition"
+            >
+              {showPassword ? (
+                <EyeOff size={20} />
+              ) : (
+                <Eye size={20} />
+              )}
+            </button>
+          </div>
+
 
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
-          className="border p-2 rounded w-full mb-4"
+          className="border p-3 rounded-lg w-full mb-6"
         >
 
           <option value="Admin">Admin</option>
@@ -106,7 +131,7 @@ export default function LoginPage() {
         <button
           // onClick={() => router.push("/dashboard")}
           onClick={handleLogin}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+          className="bg-blue-600 text-white py-3 rounded-lg w-full hover:shadow-xl transition-all duration-200"
         >
           Sign In
         </button>
