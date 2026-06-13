@@ -171,29 +171,30 @@ export default function EmployeeListPage() {
 
     <div className="overflow-x-auto rounded-xl border">
 
-      <table className="border border-collapse w-full">
+      <table className="w-full bg-white rounded-xl overflow-hidden shadow-sm">
+        {/* border border-collapse w-full" */}
 
         <thead className="bg-blue-50">
 
           <tr>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">ID</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">ID</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Name</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Name</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Department</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Department</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Risk Score</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Risk Score</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Hours Worked</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Hours Worked</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Tasks Completed</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Tasks Completed</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Delay Days</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Delay Days</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Burnout Risk</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Burnout Risk</th>
 
-            <th className="px-4 py-3 text-left font-bold text-gray-700 uppercase text-sm">Actions</th>
+            <th className="px-6 py-4 bg-gray text-left text-sm font-semibold uppercase tracking-wide">Actions</th>
 
           </tr>
 
@@ -236,7 +237,7 @@ export default function EmployeeListPage() {
            .map((employee: any) => (
 
             <tr key={employee.id}
-            className="hover:bg-gray-50 transition"
+            className="hover:bg-blue-50 transition"
             >
 
               <td className="border px-4 py-3">
