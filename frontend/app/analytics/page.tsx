@@ -1,4 +1,225 @@
+"use client"
+import { useEffect, useState } from "react"
+import axios from "axios"
+
 export default function AnalyticsPage() {
+
+    const [employees, setEmployees] = useState<any[]>([])
+    const [historyData, setHistoryData] = useState<any[]>([])
+
+
+    useEffect(() => {
+
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_URL}/employees`
+        )
+        .then((response) => {
+          setEmployees(response.data)
+
+        //   console.log("Employees API Response:")
+        //   console.log(response.data)
+
+        })
+
+        
+
+
+        console.log("API URL:", process.env.NEXT_PUBLIC_API_URL)
+
+
+
+       axios
+         .get(
+           `${process.env.NEXT_PUBLIC_API_URL}/employee-history/2`
+         )
+         .then((response) => {
+
+            console.log(response.data.history)
+
+           setHistoryData(
+             response.data.history
+           )
+         })
+
+     }, [])
+
+
+
+    const averageProductivity =
+    employees.length > 0
+      ? Math.round(
+
+          employees.reduce(
+
+            (sum, employee) =>
+
+              sum +
+              (
+                employee.tasks_completed /
+                Math.max(employee.hours_worked, 1)
+              ) * 100,
+
+            0
+
+          ) / employees.length
+
+        )
+      : 0
+
+
+      const averageBurnout =
+
+      employees.length > 0
+
+      ? Math.round(
+
+          employees.reduce(
+
+            (sum, employee) => {
+
+              if (
+                employee.burnout_risk === "High"
+              )
+                return sum + 100
+
+              if (
+                employee.burnout_risk === "Medium"
+              )
+                return sum + 50
+
+              return sum
+
+            },
+
+            0
+
+          ) / employees.length
+
+        )
+
+      : 0
+
+
+      const departmentCounts = employees.reduce(
+        (acc: any, employee: any) => {
+
+          acc[employee.department] =
+            (acc[employee.department] || 0) + 1
+
+          return acc
+
+        },
+        {}
+      )
+       
+
+      const highRiskCount = employees.filter(
+        (employee: any) =>
+          employee.burnout_risk === "High"
+      ).length
+
+      const mediumRiskCount = employees.filter(
+        (employee: any) =>
+          employee.burnout_risk === "Medium"
+      ).length
+
+      const lowRiskCount = employees.filter(
+        (employee: any) =>
+          employee.burnout_risk === "Low"
+      ).length
+
+
+      const highRiskPercent =
+      employees.length > 0
+        ? Math.round(
+            (highRiskCount / employees.length) * 100
+          )
+        : 0
+
+      const mediumRiskPercent =
+      employees.length > 0
+        ? Math.round(
+            (mediumRiskCount / employees.length) * 100
+          )
+        : 0
+
+      const lowRiskPercent =
+      employees.length > 0
+        ? Math.round(
+            (lowRiskCount / employees.length) * 100
+          )
+        : 0  
+    
+
+      const delayedProjects = employees.filter(
+        (employee: any) =>
+          employee.delay_days > 5
+      ).length
+
+      const atRiskProjects = employees.filter(
+        (employee: any) =>
+          employee.delay_days > 0 &&
+          employee.delay_days <= 5
+      ).length
+
+      const onTimeProjects = employees.filter(
+        (employee: any) =>
+          employee.delay_days === 0
+      ).length
+
+      
+      const highestDepartment =
+      Object.entries(departmentCounts).length > 0
+
+      ? Object.entries(departmentCounts).sort(
+          (a: any, b: any) => b[1] - a[1]
+        )[0][0]
+
+      : "N/A"
+
+
+      const productivityStatus =
+
+      averageProductivity >= 70
+
+      ? "Productivity is performing well across the workforce."
+
+      : "Productivity may require attention."
+
+
+      const burnoutStatus =
+
+      highRiskCount > 0
+
+      ? `${highRiskCount} employees are currently in the high burnout risk category.`
+
+      : "No employees are currently in the high burnout risk category."
+
+
+      const projectStatus =
+
+      delayedProjects > 0
+
+      ? `${delayedProjects} projects require immediate attention.`
+
+      : "All projects are currently on track."
+
+
+      const monthOrder = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ];
+
+      const sortedHistory = [...historyData].sort(
+        (a, b) =>
+          monthOrder.indexOf(a.month) -
+          monthOrder.indexOf(b.month)
+      );
+
+
+    //   const [historyData, setHistoryData] = useState<any[]>([])
+
     return (
         <div className="p-10">
             <div className="mb-8">
@@ -29,22 +250,28 @@ export default function AnalyticsPage() {
 
                   <div className="bg-white p-6 rounded-2xl shadow-md">
                     <h3 className="text-gray-500">Total Employees</h3>
-                    <p className="text-3xl font-bold mt-2">10</p>
+                    <p className="text-3xl font-bold mt-2">{employees.length}</p>
                   </div>
 
                   <div className="bg-white p-6 rounded-2xl shadow-md">
                     <h3 className="text-gray-500">Avg Productivity</h3>
-                    <p className="text-3xl font-bold mt-2">82%</p>
+                    <p className="text-3xl font-bold mt-2">{averageProductivity}%</p>
                   </div>
 
                   <div className="bg-white p-6 rounded-2xl shadow-md">
                     <h3 className="text-gray-500">Avg Burnout Risk</h3>
-                    <p className="text-3xl font-bold mt-2">34%</p>
+                    <p className="text-3xl font-bold mt-2">{averageBurnout}%</p>
                   </div>
 
                   <div className="bg-white p-6 rounded-2xl shadow-md">
                     <h3 className="text-gray-500">Active Alerts</h3>
-                    <p className="text-3xl font-bold mt-2">2</p>
+                    <p className="text-3xl font-bold mt-2">{
+                         employees.filter(
+                           (employee) =>
+                             employee.burnout_risk === "High"
+                         ).length
+                    }</p>
+
                   </div>
 
                 </div>
@@ -59,7 +286,41 @@ export default function AnalyticsPage() {
 
                   <div className="space-y-5">
 
-                    <div>
+                    {Object.entries(departmentCounts).map(
+                      ([department, count]: any) => (
+
+                        <div key={department}>
+
+                          <div className="flex justify-between mb-1">
+
+                            <span>{department}</span>
+
+                            <span>{count}</span>
+
+                          </div>
+
+                          <div className="w-full bg-gray-200 rounded-full h-3">
+
+                            <div
+                              className="bg-blue-600 h-3 rounded-full"
+                              style={{
+                                width: `${
+                                  (count / employees.length) * 100
+                                }%`,
+                              }}
+                            ></div>
+
+                          </div>
+     
+                        </div>
+
+                      )
+                    )}
+
+                </div>
+        </div>
+
+                    {/* <div>
                       <div className="flex justify-between mb-1">
                         <span>Engineering</span>
                         <span>82%</span>
@@ -117,7 +378,7 @@ export default function AnalyticsPage() {
 
                 </div>
 
-            </div>
+            </div> */}
 
 
 
@@ -133,13 +394,15 @@ export default function AnalyticsPage() {
                     <div>
                       <div className="flex justify-between mb-1">
                         <span>Low Risk</span>
-                        <span>60%</span>
+                        <span>{lowRiskPercent}%</span>
                       </div>
 
                       <div className="w-full bg-gray-200 rounded-full h-4">
                         <div
                           className="bg-green-500 h-4 rounded-full"
-                          style={{ width: "60%" }}
+                          style={{
+                            width: `${lowRiskPercent}%`
+                          }}
                         ></div>
                       </div>
                     </div>
@@ -147,13 +410,15 @@ export default function AnalyticsPage() {
                     <div>
                       <div className="flex justify-between mb-1">
                         <span>Medium Risk</span>
-                        <span>25%</span>
+                        <span>{mediumRiskPercent}%</span>
                       </div>
 
                       <div className="w-full bg-gray-200 rounded-full h-4">
                         <div
                           className="bg-yellow-500 h-4 rounded-full"
-                          style={{ width: "25%" }}
+                          style={{
+                            width: `${mediumRiskPercent}%`
+                          }}
                         ></div>
                       </div>
                     </div>
@@ -161,13 +426,15 @@ export default function AnalyticsPage() {
                     <div>
                       <div className="flex justify-between mb-1">
                         <span>High Risk</span>
-                        <span>15%</span>
+                        <span>{highRiskPercent}%</span>
                       </div>
 
                       <div className="w-full bg-gray-200 rounded-full h-4">
                         <div
                           className="bg-red-500 h-4 rounded-full"
-                          style={{ width: "15%" }}
+                          style={{
+                            width: `${highRiskPercent}%`
+                          }}
                         ></div>
                      </div>
                     </div>
@@ -176,7 +443,9 @@ export default function AnalyticsPage() {
 
             </div>
 
-
+                {/* <pre>
+                  {JSON.stringify(historyData, null, 2)}
+                </pre> */}
 
                 <div className="bg-white p-6 rounded-2xl shadow-md mb-8">
 
@@ -184,47 +453,34 @@ export default function AnalyticsPage() {
                     Productivity Trend
                   </h2>
 
-                  <div className="grid grid-cols-5 gap-4 items-end h-48">
+                  <div className="grid grid-cols-5 gap-4 items-end h-64">
 
-                    <div className="flex flex-col items-center">
-                      <div
-                        className="bg-blue-500 w-12 rounded-t-lg"
-                        style={{ height: "100px" }}
-                      ></div>
-                      <span className="mt-2">Jan</span>
-                    </div>
+                    {sortedHistory.map((record) => (
 
-                    <div className="flex flex-col items-center">
                       <div
-                        className="bg-blue-500 w-12 rounded-t-lg"
-                        style={{ height: "120px" }}
-                      ></div>
-                      <span className="mt-2">Feb</span>
-                    </div>
+                        key={record.record}
+                        className="flex flex-col items-center"
+                      >
 
-                    <div className="flex flex-col items-center">
-                      <div
-                        className="bg-blue-500 w-12 rounded-t-lg"
-                        style={{ height: "140px" }}
-                      ></div>
-                      <span className="mt-2">Mar</span>
-                    </div>
+                        <div
+                          className="bg-blue-500 w-12 rounded-t-lg"
+                          style={{
+                            height: `${Math.max(
+                              (record.productivity_score / 250) * 120,
+                              40
+                            )}px`
+                          }}
+                        ></div>
 
-                    <div className="flex flex-col items-center">
-                      <div
-                        className="bg-blue-500 w-12 rounded-t-lg"
-                        style={{ height: "130px" }}
-                      ></div>
-                      <span className="mt-2">Apr</span>
-                    </div>
+                        <span className="mt-2 text-black font-medium">
+                          {/* {JSON.stringify(record)}  */}
+                          {record.month}
+                          {/* Record {record.record} */}
+                        </span>
 
-                    <div className="flex flex-col items-center">
-                      <div
-                        className="bg-blue-500 w-12 rounded-t-lg"
-                        style={{ height: "160px" }}
-                      ></div>
-                      <span className="mt-2">May</span>
-                    </div>
+                      </div>
+
+                    ))}
 
                   </div>
 
@@ -247,7 +503,7 @@ export default function AnalyticsPage() {
                       </h3>
 
                       <p className="text-4xl font-bold text-green-600 mt-2">
-                        18
+                        {onTimeProjects}
                       </p>
                     </div>
 
@@ -257,7 +513,7 @@ export default function AnalyticsPage() {
                       </h3>
 
                       <p className="text-4xl font-bold text-yellow-600 mt-2">
-                        5
+                        {atRiskProjects}
                       </p>
                     </div>
 
@@ -267,7 +523,7 @@ export default function AnalyticsPage() {
                       </h3>
 
                       <p className="text-4xl font-bold text-red-600 mt-2">
-                        2
+                        {delayedProjects}
                       </p>
                     </div>
 
@@ -286,19 +542,19 @@ export default function AnalyticsPage() {
                   <div className="space-y-4">
 
                     <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-                      Productivity improved by 8% compared to last month.
+                      {productivityStatus}
                     </div>
 
                     <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
-                      Engineering department has the highest workload.
+                      {highestDepartment} currently has the highest workforce allocation.
                     </div>
 
                     <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
-                      2 employees are currently in the high burnout risk category.
+                      {burnoutStatus}
                     </div>
 
                     <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded">
-                      18 projects are currently on track for timely delivery.
+                      {projectStatus}
                     </div>
 
                   </div>
