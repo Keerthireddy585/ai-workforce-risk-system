@@ -453,7 +453,7 @@ export default function AnalyticsPage() {
                     Productivity Trend
                   </h2>
 
-                  <div className="grid grid-cols-5 gap-4 items-end h-64">
+                  <div className="grid grid-cols-6 gap-2 items-end h-64">
 
                     {sortedHistory.map((record) => (
 
@@ -463,7 +463,7 @@ export default function AnalyticsPage() {
                       >
 
                         <div
-                          className="bg-blue-500 w-12 rounded-t-lg"
+                          className="bg-blue-500 w-10 rounded-t-lg"
                           style={{
                             height: `${Math.max(
                               (record.productivity_score / 250) * 120,
