@@ -466,7 +466,7 @@ export default function AnalyticsPage() {
                           className="bg-blue-500 w-10 rounded-t-lg"
                           style={{
                             height: `${Math.max(
-                              (record.productivity_score / 250) * 120,
+                              (record.productivity_score / 250) * 220,
                               40
                             )}px`
                           }}
@@ -476,6 +476,10 @@ export default function AnalyticsPage() {
                           {/* {JSON.stringify(record)}  */}
                           {record.month}
                           {/* Record {record.record} */}
+                        </span>
+
+                        <span className="text-xs text-gray-500">
+                            {record.productivity_score}
                         </span>
 
                       </div>
