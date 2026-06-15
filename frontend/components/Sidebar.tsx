@@ -2,11 +2,25 @@
 
 import Link from "next/link"
 import {useRouter, usePathname} from "next/navigation";
+import { useEffect, useState } from "react";
+
+
 
 export default function Sidebar() {
 
     const router = useRouter();
     const pathname = usePathname();
+
+    // const role =
+    //   typeof window !== "undefined"
+    //     ? localStorage.getItem("role")
+    //     : "";
+
+    const [role, setRole] = useState("");
+
+    useEffect(() => {
+  setRole(localStorage.getItem("role") || "");
+}, []);
 
     if (pathname === "/login") {
         return null;
@@ -50,40 +64,90 @@ Dashboard
 </Link>
 
 
-<Link href="/employees"
+{/* <Link href="/employees"
 className={`block rounded-lg px-3 py-2 transition ${
   pathname === "/employees"
     ? "bg-slate-800 text-white"
     : "hover:bg-slate-800"
  }`} >
 Add Employee
-</Link>
+</Link> */}
+
+{role === "Admin" && (
+  <Link
+    href="/employees"
+    className={`block rounded-lg px-3 py-2 transition ${
+      pathname === "/employees"
+        ? "bg-slate-800 text-white"
+        : "hover:bg-slate-800"
+    }`}
+  >
+    Add Employee
+  </Link>
+)}
 
 
-<Link href="/employee-list"
+{/* <Link href="/employee-list"
 className={`block rounded-lg px-3 py-2 transition ${
   pathname === "/employee-list"
     ? "bg-slate-800 text-white"
     : "hover:bg-slate-800"
  }`} >Employee List
-</Link>
+</Link> */}
+
+{(role === "Admin" || role === "Manager") && (
+  <Link
+    href="/employee-list"
+    className={`block rounded-lg px-3 py-2 transition ${
+      pathname === "/employee-list"
+        ? "bg-slate-800 text-white"
+        : "hover:bg-slate-800"
+    }`}
+  >
+    Employee List
+  </Link>
+)}
 
 
-<Link href="/analytics"
+{/* <Link href="/analytics"
 className={`block rounded-lg px-3 py-2 transition ${
   pathname === "/analytics"
     ? "bg-slate-800 text-white"
     : "hover:bg-slate-800"
  }`} >Analytics
-</Link>
+</Link> */}
+
+{(role === "Admin" || role === "Manager") && (
+  <Link
+    href="/analytics"
+    className={`block rounded-lg px-3 py-2 transition ${
+      pathname === "/analytics"
+        ? "bg-slate-800 text-white"
+        : "hover:bg-slate-800"
+    }`}
+  >
+    Analytics
+  </Link>
+)}
 
 
-<Link href="/predict-burnout"
+{/* <Link href="/predict-burnout"
 className={`block rounded-lg px-3 py-2 transition ${
   pathname === "/predict-burnout"
     ? "bg-slate-800 text-white"
     : "hover:bg-slate-800"
  }`} >Predict Burnout
+</Link> */}
+
+<Link
+  href="/predict-burnout"
+  className={`block rounded-lg px-3 py-2 transition ${
+    pathname === "/predict-burnout"
+      ? "bg-slate-800 text-white"
+      : "hover:bg-slate-800"
+  }`}
+>
+  Predict Burnout
 </Link>
 
 <hr className="border-slate-700 my-4" />

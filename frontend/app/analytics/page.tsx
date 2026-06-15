@@ -218,6 +218,12 @@ export default function AnalyticsPage() {
       );
 
 
+      const role =
+        typeof window !== "undefined"
+          ? localStorage.getItem("role")
+          : "User"
+
+
     //   const [historyData, setHistoryData] = useState<any[]>([])
 
     return (
@@ -232,6 +238,44 @@ export default function AnalyticsPage() {
                     Workforce insights, trends and performance metrics
                 </p>
 
+                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 rounded-2xl shadow-lg mb-8">
+
+                  <h2 className="text-3xl font-bold mb-2">
+                    Welcome Back, {role} 
+                  </h2>
+
+                  <p className="text-blue-100">
+                    Here's a snapshot of your workforce today. Monitor employee productivity, burnout risks,
+                    project performance and workforce trends in real time.
+                  </p>
+
+                  {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+
+                    <div className="bg-white/10 p-4 rounded-xl">
+                      <h3 className="font-medium">Employees</h3>
+                      <p className="text-2xl font-bold">
+                        {employees.length}
+                      </p>
+                    </div>
+
+                    <div className="bg-white/10 p-4 rounded-xl">
+                      <h3 className="font-medium">Avg Productivity</h3>
+                      <p className="text-2xl font-bold">
+                        {averageProductivity}%
+                      </p>
+                    </div>
+
+                    <div className="bg-white/10 p-4 rounded-xl">
+                      <h3 className="font-medium">High Risk Employees</h3>
+                      <p className="text-2xl font-bold">
+                        {highRiskCount}
+                      </p>
+                    </div>
+
+                  </div> */}
+
+                </div>
+{/* 
                 <div className="bg-blue-50 border border-blue-200 p-6 rounded-2xl mb-8">
 
                   <h2 className="text-2xl font-semibold mb-2">
@@ -243,7 +287,7 @@ export default function AnalyticsPage() {
                     project performance and operational risks.
                   </p>
 
-                </div>
+                </div> */}
 
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
