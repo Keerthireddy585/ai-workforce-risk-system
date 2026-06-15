@@ -286,6 +286,7 @@ def hr_dashboard(token: str):
 
 @router.get("/employee-history/{employee_id}")
 def employee_history(employee_id: int):
+    print("EMPLOYEE HISTORY API CALLED")
 
     db = SessionLocal()
 
@@ -310,9 +311,13 @@ def employee_history(employee_id: int):
 
     for index, record in enumerate(history, start=1):
 
+        print("MONTH VALUE:", record.month)
+
         results.append({
 
             "record": index,
+
+            "month": record.month,
 
             "risk_score": record.risk_score,
 

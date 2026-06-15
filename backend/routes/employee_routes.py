@@ -20,6 +20,7 @@ from models.employee import Employee
 from models.employee_history import EmployeeHistory
 from analytics.risk_scoring import calculate_risk_score
 from ai.burnout_prediction import predict_burnout
+from datetime import datetime
 # from ai.recommendations import generate_recommendation
 
 router = APIRouter()
@@ -122,7 +123,10 @@ def create_employee(employee_data: dict = Body(...)):
             employee.tasks_completed * 10
             - employee.delay_days * 5,
 
-        burnout_risk=employee.burnout_risk
+        burnout_risk=employee.burnout_risk,
+
+        month=datetime.now().strftime("%b")
+
 
     )
 
@@ -259,7 +263,10 @@ def update_employee(employee_id: int, employee_data: dict):
             employee.tasks_completed * 10
             - employee.delay_days * 5,
 
-        burnout_risk=employee.burnout_risk
+        burnout_risk=employee.burnout_risk,
+
+        month=datetime.now().strftime("%b")
+
 
     )
 

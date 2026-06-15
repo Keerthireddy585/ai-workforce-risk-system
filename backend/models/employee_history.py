@@ -16,3 +16,5 @@ class EmployeeHistory(Base):
     productivity_score = Column(Integer)
 
     burnout_risk = Column(String)
+
+    month = Column(String)
