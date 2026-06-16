@@ -76,7 +76,7 @@ export default function LoginPage() {
 
   return (
 
-    <main className="flex items-center justify-center min-h-screen bg-gray-100">
+    <main className="flex items-center text-black justify-center min-h-screen bg-gray-100">
 
       <div className="bg-white p-10 rounded-2xl shadow-md w-[400px]">
 

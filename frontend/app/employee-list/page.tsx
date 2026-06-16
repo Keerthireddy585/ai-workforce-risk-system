@@ -102,7 +102,7 @@ export default function EmployeeListPage() {
 
   return (
 
-    <main className="p-10 bg-gray-100 min-h-screen">
+    <main className="p-10 bg-gray-100 text-black min-h-screen">
       <div className="max-w-7xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
 
       <h1 className="text-3xl font-bold mb-2">

@@ -109,7 +109,7 @@ export default function EmployeeHistoryChart(
 
           <CartesianGrid strokeDasharray="3 3" />
 
-          <XAxis dataKey="record" />
+          <XAxis dataKey="month" />
 
           <YAxis domain={[-100, 100]} />
 

@@ -555,7 +555,7 @@ export default function AnalyticsPage() {
 
                 <div className="bg-white p-6 rounded-2xl shadow-md mb-8">
 
-                  <div className="flex justify-between items-center mb-6">
+                  <div className="flex justify-between text-black items-center mb-6">
 
                     <h2 className="text-2xl font-semibold text-black">
                       Productivity Trend

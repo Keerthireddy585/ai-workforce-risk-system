@@ -132,7 +132,7 @@ export default function DashboardPage() {
 
     <main className="p-10 min-h-screen bg-gray-100">
 
-      <h1 className="text-4xl font-bold mb-2">
+      <h1 className="text-4xl font-bold text-black mb-2">
         Enterprise Workforce Dashboard
       </h1>
 
@@ -143,7 +143,7 @@ export default function DashboardPage() {
 
       <div className="mb-4">
 
-        <p className="text-xl font-semibold mb-4">
+        <p className="text-xl font-semibold text-black mb-4">
           Logged in as: {role}
         </p>
 
@@ -195,7 +195,7 @@ export default function DashboardPage() {
 
           <div className="p-6 bg-white rounded-2xl shadow-md">
 
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold text-black mb-4">
               Productivity Trends
             </h2>
 
@@ -206,7 +206,7 @@ export default function DashboardPage() {
 
           <div className="p-6 bg-white rounded-2xl shadow-md">
 
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold text-black mb-4">
               Burnout Analytics
             </h2>
 
@@ -217,7 +217,7 @@ export default function DashboardPage() {
 
           <div className="p-6 bg-white rounded-2xl shadow-md">
 
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl font-bold text-black mb-4">
               Project Delay Analytics
             </h2>
 
@@ -242,7 +242,7 @@ export default function DashboardPage() {
 
         <div className="p-6 bg-white rounded-2xl shadow-md">
 
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-2xl font-bold text-black mb-4">
             Bottlenecks Detected
           </h2>
 
@@ -254,7 +254,7 @@ export default function DashboardPage() {
 
           <div
             key={employee.employee_id}
-            className="border-b py-2"
+            className="border-b text-black py-2"
           >
 
             <p>
@@ -272,7 +272,7 @@ export default function DashboardPage() {
         
         <div className="mt-8">
           <label
-            className="block text-lg font-semibold mb-2"
+            className="block text-lg font-semibold text-black mb-2"
           >
             Select Employee for Risk History
           </label>
@@ -285,7 +285,7 @@ export default function DashboardPage() {
               Number(e.target.value)
             )
           }
-          className="w-full p-3 border rounded-lg shadow-sm"
+          className="w-full p-3 border rounded-lg text-black shadow-sm"
         >
 
         {/* <option value={10}>
@@ -317,7 +317,7 @@ export default function DashboardPage() {
         
 
 
-        <div className="p-6 bg-white rounded-2xl shadow-md mt-4">
+        <div className="p-6 bg-white rounded-2xl text-black shadow-md mt-4">
 
           <EmployeeHistoryChart
           employeeId={selectedEmployee}
@@ -338,19 +338,19 @@ export default function DashboardPage() {
           </div> */}
 
           <div className="p-6 bg-white rounded-2xl shadow-md mt-6">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl text-black font-bold mb-4">
               Burnout Trends</h2>
             <BurnoutChart />
           </div>
 
           <div className="p-6 bg-white rounded-2xl shadow-md mt-6">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl text-black font-bold mb-4">
               Workload Distribution</h2>
             <WorkloadChart />
           </div>
 
           <div className="p-6 bg-white rounded-2xl shadow-md">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl text-black font-bold mb-4">
               Risk Trend Analysis</h2>
             <RiskTrendChart />
           </div>
@@ -361,7 +361,7 @@ export default function DashboardPage() {
           </div> */}
 
           <div className="p-6 bg-white rounded-2xl shadow-md">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl text-black font-bold mb-4">
               Anomaly Frequency</h2>
             <AnomalyChart />
           </div>
@@ -397,7 +397,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-2 gap-8">
 
-          <div className="p-6 bg-white rounded-2xl shadow-md mt-6">
+          <div className="p-6 bg-white text-black rounded-2xl shadow-md mt-6">
 
             <h2 className="text-2xl font-bold mb-4">
               Productivity Trends
@@ -408,7 +408,7 @@ export default function DashboardPage() {
           </div>
 
 
-          <div className="p-6 bg-white rounded-2xl shadow-md mt-6">
+          <div className="p-6 bg-white text-black rounded-2xl shadow-md mt-6">
 
             <h2 className="text-2xl font-bold mb-4">
               Project Delay Analytics
