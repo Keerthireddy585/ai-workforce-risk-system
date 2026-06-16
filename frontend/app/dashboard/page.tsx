@@ -228,7 +228,7 @@ export default function DashboardPage() {
         </div>
 
       )}
-        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 mb-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 mt-8 mb-6">
 
           <h2 className="text-gray-500 text-sm uppercase">
             Workload Status
