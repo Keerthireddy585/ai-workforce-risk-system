@@ -47,6 +47,12 @@ export default function LoginPage() {
     )
 
     console.log("AFTER AXIOS")
+
+    if (response.data.error) {
+      alert(response.data.error)
+      return
+    }
+
     
      localStorage.setItem(
     "token",
