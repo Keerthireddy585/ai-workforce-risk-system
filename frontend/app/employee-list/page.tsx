@@ -1,9 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation";
 import axios from "axios"
 
 export default function EmployeeListPage() {
+
+  const router = useRouter();
+
+  const [mounted, setMounted] = useState(false); 
 
   const [employees, setEmployees] = useState([])
 
@@ -56,6 +61,8 @@ export default function EmployeeListPage() {
 
 }
 
+  
+
 
   useEffect(() => {
 
@@ -72,6 +79,26 @@ export default function EmployeeListPage() {
       })
 
   }, [])
+
+  
+  useEffect(() => {
+    setMounted(true);
+
+    const role = localStorage.getItem("role");
+
+    if (
+      role !== "Admin" &&
+      role !== "Manager"
+    ) {
+      router.push("/dashboard");
+    }
+  }, [router]);
+
+
+
+  if (!mounted) {
+  return null;
+}
 
   return (
 

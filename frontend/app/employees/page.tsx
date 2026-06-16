@@ -1,8 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function EmployeesPage() {
+
+  const router = useRouter();
+
+  const [mounted, setMounted] = useState(false);
+
+
   const [employee, setEmployee] = useState({
     name: "",
     department: "",
@@ -30,6 +37,22 @@ export default function EmployeesPage() {
     setSuccess(true);
     console.log(data);
   };
+
+  useEffect(() => {
+    setMounted(true);
+
+    const role = localStorage.getItem("role");
+
+    if (role !== "Admin") {
+      router.push("/dashboard");
+    }
+  }, [router]);
+
+
+  if (!mounted) {
+    return null;
+  }
+
 
   return (
     <main className="p-10 bg-gray-100 min-h-screen">
