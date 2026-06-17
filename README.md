@@ -201,31 +201,73 @@ Detects unusual workforce behavior and operational risks.
 
 ### Login Page
 
-*Add screenshot here*
+![Login Page](screenshots/login/workforce_login.png)
+
+---
 
 ### Admin Dashboard
 
-*Add screenshot here*
+![Admin Dashboard 1](screenshots/admin/dashboard/admin_dashboard_01.png)
 
-### Manager Dashboard
+![Admin Dashboard 2](screenshots/admin/dashboard/admin_dashboard_02.png)
 
-*Add screenshot here*
+![Admin Dashboard 3](screenshots/admin/dashboard/admin_dashboard_03.png)
 
-### Employee Dashboard
+![Admin Dashboard 4](screenshots/admin/dashboard/admin_dashboard_04.png)
 
-*Add screenshot here*
+![Admin Dashboard 5](screenshots/admin/dashboard/admin_dashboard_05.png)
+
+---
+
+### Add Employee
+
+![Add Employee](screenshots/admin/add_employee/add_employee_01.png)
+
+---
 
 ### Employee List
 
-*Add screenshot here*
+![Employee List 1](screenshots/admin/employee_list/employee_list_01.png)
+
+![Employee List 2](screenshots/admin/employee_list/employee_list_02.png)
+
+---
 
 ### Analytics Dashboard
 
-*Add screenshot here*
+![Analytics Dashboard](screenshots/admin/analytics/analytics_01.png)
+
+---
 
 ### Burnout Prediction Page
 
-*Add screenshot here*
+![Burnout Prediction](screenshots/admin/predict_burnout/predict_burnout_01.png)
+
+---
+
+### Manager Dashboard
+
+![Manager Dashboard 1](screenshots/manager/dashboard/manager_dashboard_01.png)
+
+![Manager Dashboard 2](screenshots/manager/dashboard/manager_dashboard_02.png)
+
+![Manager Dashboard 3](screenshots/manager/dashboard/manager_dashboard_03.png)
+
+![Manager Dashboard 3](screenshots/manager/dashboard/manager_dashboard_04.png)
+
+
+---
+
+### Employee Dashboard
+
+![Employee Dashboard 1](screenshots/employee/dashboard/employee_dashboard_01.png)
+
+![Employee Dashboard 2](screenshots/employee/dashboard/employee_dashboard_02.png)
+
+![Employee Dashboard 3](screenshots/employee/dashboard/employee_dashboard_03.png)
+
+![Employee Dashboard 3](screenshots/employee/dashboard/employee_dashboard_04.png)
+
 
 ---
 
